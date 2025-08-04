@@ -19,20 +19,15 @@ ScreenGui.Parent = game.CoreGui
 ScreenGui.ResetOnSpawn = false
 ScreenGui.IgnoreGuiInset = true
 
--- Background Frame
-local Background = Instance.new("Frame")
-Background.Size = UDim2.new(1, 0, 1, 0)
-Background.Position = UDim2.new(0, 0, 0, 0)
-Background.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-Background.Parent = ScreenGui
-
-local UIGradient = Instance.new("UIGradient")
-UIGradient.Color = ColorSequence.new{
-    ColorSequenceKeypoint.new(0, Color3.fromRGB(50, 150, 255)),
-    ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 20, 60))
-}
-UIGradient.Rotation = 90
-UIGradient.Parent = Background
+-- Triangular Background Design (Layered Frames)
+for i = 1, 10 do
+    local Triangle = Instance.new("Frame")
+    Triangle.Size = UDim2.new(1, 0, 0.1, 0)
+    Triangle.Position = UDim2.new(0, 0, (i-1)*0.1, 0)
+    Triangle.BackgroundColor3 = (i % 2 == 0) and Color3.fromRGB(30, 30, 30) or Color3.fromRGB(10, 10, 10)
+    Triangle.BorderSizePixel = 0
+    Triangle.Parent = ScreenGui
+end
 
 -- Warning Label
 local WarningLabel = Instance.new("TextLabel")
@@ -61,9 +56,9 @@ end)
 
 -- Sonic Spinner
 local Spinner = Instance.new("ImageLabel")
-Spinner.Size = UDim2.new(0, 200, 0, 200)
-Spinner.AnchorPoint = Vector2.new(0.5, 0.5)
-Spinner.Position = UDim2.new(0.5, 0, 0.5, 0)
+Spinner.Size = UDim2.new(0, 150, 0, 150)
+Spinner.AnchorPoint = Vector2.new(0.5, 0)
+Spinner.Position = UDim2.new(0.5, 0, 0.2, 0)
 Spinner.BackgroundTransparency = 1
 Spinner.Image = "rbxassetid://14284090563" -- Sonic Spin
 Spinner.Parent = ScreenGui
@@ -78,10 +73,26 @@ task.spawn(function()
     end
 end)
 
+-- Progress Bar Background
+local ProgressBarBG = Instance.new("Frame")
+ProgressBarBG.Size = UDim2.new(0.6, 0, 0.02, 0)
+ProgressBarBG.AnchorPoint = Vector2.new(0.5, 0)
+ProgressBarBG.Position = UDim2.new(0.5, 0, 0.5, 0)
+ProgressBarBG.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+ProgressBarBG.BorderSizePixel = 0
+ProgressBarBG.Parent = ScreenGui
+
+-- Progress Bar Fill
+local ProgressBarFill = Instance.new("Frame")
+ProgressBarFill.Size = UDim2.new(0, 0, 1, 0)
+ProgressBarFill.BackgroundColor3 = Color3.fromRGB(0, 200, 255)
+ProgressBarFill.BorderSizePixel = 0
+ProgressBarFill.Parent = ProgressBarBG
+
 -- Percentage Text
 local PercentageLabel = Instance.new("TextLabel")
-PercentageLabel.Size = UDim2.new(1, 0, 0.1, 0)
-PercentageLabel.Position = UDim2.new(0, 0, 0.75, 0)
+PercentageLabel.Size = UDim2.new(1, 0, 0.05, 0)
+PercentageLabel.Position = UDim2.new(0, 0, 0.55, 0)
 PercentageLabel.BackgroundTransparency = 1
 PercentageLabel.Text = "Loading... 0%"
 PercentageLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -92,7 +103,7 @@ PercentageLabel.Parent = ScreenGui
 -- Funny Tips Text
 local TipLabel = Instance.new("TextLabel")
 TipLabel.Size = UDim2.new(1, 0, 0.05, 0)
-TipLabel.Position = UDim2.new(0, 0, 0.85, 0)
+TipLabel.Position = UDim2.new(0, 0, 0.62, 0)
 TipLabel.BackgroundTransparency = 1
 TipLabel.Text = "Preparing magic soil..."
 TipLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
@@ -123,7 +134,9 @@ end)
 
 -- Loading Progress (2 Minutes)
 for i = 1, 100 do
+    local progress = i / 100
     PercentageLabel.Text = "Loading... " .. i .. "%"
+    ProgressBarFill.Size = UDim2.new(progress, 0, 1, 0)
     task.wait(1.2)
 end
 
