@@ -68,7 +68,7 @@ coroutine.wrap(function()
     end
 end)()
 
--- Sonic Spinner (Above Progress Bar)
+-- Sonic Spinner
 local Spinner = Instance.new("ImageLabel")
 Spinner.Size = UDim2.new(0, 100, 0, 100)
 Spinner.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -178,12 +178,44 @@ pcall(function()
 end)
 UserInputService.MouseBehavior = Enum.MouseBehavior.LockCenter
 
--- Loading Progress (3.5 Minutes)
-for i = 1, 100 do
-    local progress = i / 100
-    PercentageLabel.Text = "Loading... " .. i .. "%"
+-- Clicking Minigame Setup
+local ClickPoints = 0
+local ClickButton = Instance.new("TextButton")
+ClickButton.Size = UDim2.new(0, 150, 0, 50)
+ClickButton.Position = UDim2.new(0.5, -75, 0.72, 0)
+ClickButton.Text = "CLICK!"
+ClickButton.TextSize = 24
+ClickButton.Font = Enum.Font.SourceSansBold
+ClickButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+ClickButton.BackgroundColor3 = Color3.fromRGB(0, 120, 255)
+ClickButton.Parent = ScreenGui
+
+local ClickCounter = Instance.new("TextLabel")
+ClickCounter.Size = UDim2.new(1, 0, 0.05, 0)
+ClickCounter.Position = UDim2.new(0, 0, 0.78, 0)
+ClickCounter.BackgroundTransparency = 1
+ClickCounter.Text = "Points: 0"
+ClickCounter.TextColor3 = Color3.fromRGB(255, 255, 255)
+ClickCounter.Font = Enum.Font.GothamBold
+ClickCounter.TextSize = 22
+ClickCounter.Parent = ScreenGui
+
+ClickButton.MouseButton1Click:Connect(function()
+    ClickPoints = ClickPoints + 1
+    ClickCounter.Text = "Points: " .. ClickPoints
+end)
+
+-- Loading Progress (3.5 Minutes Timer)
+local totalLoadTime = 210
+local startTime = tick()
+
+while true do
+    local elapsed = tick() - startTime
+    local progress = math.clamp(elapsed / totalLoadTime, 0, 1)
+    PercentageLabel.Text = "Loading... " .. math.floor(progress * 100) .. "%"
     ProgressBarFill.Size = UDim2.new(progress, 0, 1, 0)
-    task.wait(2.1)
+    if progress >= 1 then break end
+    task.wait(0.1)
 end
 
 -- Cleanup UI and Restore CoreGui
