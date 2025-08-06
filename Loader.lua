@@ -54,6 +54,20 @@ WarningLabel.Font = Enum.Font.GothamBold
 WarningLabel.TextScaled = true
 WarningLabel.Parent = ScreenGui
 
+-- Pulsing Animation
+coroutine.wrap(function()
+    while ScreenGui.Parent do
+        for i = 1, 20 do
+            WarningLabel.TextTransparency = i * 0.02
+            task.wait(0.03)
+        end
+        for i = 20, 1, -1 do
+            WarningLabel.TextTransparency = i * 0.02
+            task.wait(0.03)
+        end
+    end
+end)()
+
 -- Sonic Spinner
 local Spinner = Instance.new("ImageLabel")
 Spinner.Size = UDim2.new(0, 100, 0, 100)
@@ -85,6 +99,7 @@ ProgressBarBG.Parent = ScreenGui
 local ProgressBarFill = Instance.new("Frame")
 ProgressBarFill.Size = UDim2.new(0, 0, 1, 0)
 ProgressBarFill.BackgroundTransparency = 0
+ProgressBarFill.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 ProgressBarFill.BorderSizePixel = 0
 ProgressBarFill.Parent = ProgressBarBG
 
