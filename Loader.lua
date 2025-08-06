@@ -99,7 +99,7 @@ ProgressBarBG.Parent = ScreenGui
 -- Progress Bar Fill
 local ProgressBarFill = Instance.new("Frame")
 ProgressBarFill.Size = UDim2.new(0, 0, 1, 0)
-ProgressBarFill.BackgroundTransparency = 0
+ProgressBarFill.BackgroundTransparency = 1
 ProgressBarFill.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 ProgressBarFill.BorderSizePixel = 0
 ProgressBarFill.Parent = ProgressBarBG
