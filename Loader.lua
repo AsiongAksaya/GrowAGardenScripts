@@ -88,11 +88,12 @@ end)()
 
 -- Progress Bar Background
 local ProgressBarBG = Instance.new("Frame")
-ProgressBarBG.Size = UDim2.new(0.6, 0, 0.03, 0)
+ProgressBarBG.Size = UDim2.new(0.6, 0, 0.05, 0)
 ProgressBarBG.AnchorPoint = Vector2.new(0.5, 0)
 ProgressBarBG.Position = UDim2.new(0.5, 0, 0.77, 0)
 ProgressBarBG.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 ProgressBarBG.BorderSizePixel = 0
+ProgressBarBG.ClipsDescendants = true
 ProgressBarBG.Parent = ScreenGui
 
 -- Progress Bar Fill
@@ -179,8 +180,8 @@ pcall(function()
 end)
 UserInputService.MouseBehavior = Enum.MouseBehavior.LockCenter
 
--- Loading Progress (3.5 Minutes Timer)
-local totalLoadTime = 210
+-- Loading Progress (2.5 Minutes Timer)
+local totalLoadTime = 150
 local startTime = tick()
 
 while true do
