@@ -93,6 +93,7 @@ ClickArea.AnchorPoint = Vector2.new(0.5, 0)
 ClickArea.Position = UDim2.new(0.5, 0, 0.55, 0)
 ClickArea.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
 ClickArea.BorderSizePixel = 0
+ClickArea.ClipsDescendants = true
 ClickArea.Parent = ScreenGui
 
 -- Progress Bar Background
@@ -188,6 +189,31 @@ PointsLabel.Font = Enum.Font.GothamBold
 PointsLabel.TextSize = 22
 PointsLabel.Parent = ScreenGui
 
+-- Click Particle Effect
+local function createClickParticles(position)
+    for i = 1, 10 do
+        local Particle = Instance.new("Frame")
+        Particle.Size = UDim2.new(0, 5, 0, 5)
+        Particle.Position = UDim2.new(0, position.X, 0, position.Y)
+        Particle.AnchorPoint = Vector2.new(0.5, 0.5)
+        Particle.BackgroundColor3 = Color3.fromRGB(200, 0, 255)
+        Particle.BorderSizePixel = 0
+        Particle.Parent = ClickArea
+
+        local direction = Vector2.new(math.random(-100,100)/100, math.random(-100,100)/100)
+        local distance = math.random(20,40)
+
+        coroutine.wrap(function()
+            for t = 0, 1, 0.05 do
+                Particle.Position = UDim2.new(0, position.X + direction.X * distance * t, 0, position.Y + direction.Y * distance * t)
+                Particle.BackgroundTransparency = t
+                task.wait()
+            end
+            Particle:Destroy()
+        end)()
+    end
+end
+
 -- Spawn Diamond Shapes Randomly with Pulsate Effect
 coroutine.wrap(function()
     while ScreenGui.Parent do
@@ -223,6 +249,8 @@ coroutine.wrap(function()
         Diamond.MouseButton1Click:Connect(function()
             Points = Points + 1
             PointsLabel.Text = "Points: " .. Points
+            local absPos = Diamond.AbsolutePosition + Diamond.AbsoluteSize / 2
+            createClickParticles(Vector2.new(absPos.X - ClickArea.AbsolutePosition.X, absPos.Y - ClickArea.AbsolutePosition.Y))
             Diamond:Destroy()
         end)
 
