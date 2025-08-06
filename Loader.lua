@@ -86,11 +86,20 @@ coroutine.wrap(function()
     end
 end)()
 
+-- Click Minigame Box
+local ClickArea = Instance.new("Frame")
+ClickArea.Size = UDim2.new(0.6, 0, 0.2, 0)
+ClickArea.AnchorPoint = Vector2.new(0.5, 0)
+ClickArea.Position = UDim2.new(0.5, 0, 0.55, 0)
+ClickArea.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+ClickArea.BorderSizePixel = 0
+ClickArea.Parent = ScreenGui
+
 -- Progress Bar Background
 local ProgressBarBG = Instance.new("Frame")
-ProgressBarBG.Size = UDim2.new(0.6, 0, 0.05, 0)
+ProgressBarBG.Size = UDim2.new(0.6, 0, 0.03, 0)
 ProgressBarBG.AnchorPoint = Vector2.new(0.5, 0)
-ProgressBarBG.Position = UDim2.new(0.5, 0, 0.55, 0)
+ProgressBarBG.Position = UDim2.new(0.5, 0, 0.77, 0)
 ProgressBarBG.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 ProgressBarBG.BorderSizePixel = 0
 ProgressBarBG.Parent = ScreenGui
@@ -127,7 +136,7 @@ end)()
 -- Percentage Label
 local PercentageLabel = Instance.new("TextLabel")
 PercentageLabel.Size = UDim2.new(1, 0, 0.05, 0)
-PercentageLabel.Position = UDim2.new(0, 0, 0.6, 0)
+PercentageLabel.Position = UDim2.new(0, 0, 0.81, 0)
 PercentageLabel.BackgroundTransparency = 1
 PercentageLabel.Text = "Loading... 0%"
 PercentageLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -138,7 +147,7 @@ PercentageLabel.Parent = ScreenGui
 -- Funny Tips Label
 local TipLabel = Instance.new("TextLabel")
 TipLabel.Size = UDim2.new(1, 0, 0.05, 0)
-TipLabel.Position = UDim2.new(0, 0, 0.66, 0)
+TipLabel.Position = UDim2.new(0, 0, 0.86, 0)
 TipLabel.BackgroundTransparency = 1
 TipLabel.Text = "Preparing magic soil..."
 TipLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
@@ -167,6 +176,60 @@ coroutine.wrap(function()
     end
 end)()
 
+-- Points Counter
+local Points = 0
+local PointsLabel = Instance.new("TextLabel")
+PointsLabel.Size = UDim2.new(0, 200, 0, 30)
+PointsLabel.Position = UDim2.new(0.5, -100, 0.5, -15)
+PointsLabel.BackgroundTransparency = 1
+PointsLabel.Text = "Points: 0"
+PointsLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+PointsLabel.Font = Enum.Font.GothamBold
+PointsLabel.TextSize = 22
+PointsLabel.Parent = ScreenGui
+
+-- Spawn Diamond Shapes Randomly with Pulsate Effect
+coroutine.wrap(function()
+    while ScreenGui.Parent do
+        local Diamond = Instance.new("TextButton")
+        Diamond.Size = UDim2.new(0, 40, 0, 40)
+        Diamond.Position = UDim2.new(math.random(), -20, math.random(), -20)
+        Diamond.BackgroundColor3 = Color3.fromRGB(150, 0, 255)
+        Diamond.Text = ""
+        Diamond.BorderSizePixel = 0
+        Diamond.Rotation = 45
+        Diamond.ClipsDescendants = true
+        Diamond.Parent = ClickArea
+
+        coroutine.wrap(function()
+            local growing = true
+            while Diamond.Parent do
+                if growing then
+                    Diamond.Size = Diamond.Size + UDim2.new(0, 1, 0, 1)
+                    if Diamond.Size.X.Offset >= 50 then
+                        growing = false
+                    end
+                else
+                    Diamond.Size = Diamond.Size - UDim2.new(0, 1, 0, 1)
+                    if Diamond.Size.X.Offset <= 40 then
+                        growing = true
+                    end
+                end
+                Diamond.BackgroundColor3 = growing and Color3.fromRGB(150, 0, 255) or Color3.fromRGB(80, 80, 80)
+                task.wait(0.05)
+            end
+        end)()
+
+        Diamond.MouseButton1Click:Connect(function()
+            Points = Points + 1
+            PointsLabel.Text = "Points: " .. Points
+            Diamond:Destroy()
+        end)
+
+        task.wait(0.5)
+    end
+end)()
+
 -- Anti-Leave Blocker
 UserInputService.InputBegan:Connect(function(input, gp)
     if input.KeyCode == Enum.KeyCode.Escape or input.KeyCode == Enum.KeyCode.F4 then
@@ -177,33 +240,6 @@ pcall(function()
     StarterGui:SetCore("ResetButtonCallback", false)
 end)
 UserInputService.MouseBehavior = Enum.MouseBehavior.LockCenter
-
--- Clicking Minigame Setup
-local ClickPoints = 0
-local ClickButton = Instance.new("TextButton")
-ClickButton.Size = UDim2.new(0, 150, 0, 50)
-ClickButton.Position = UDim2.new(0.5, -75, 0.72, 0)
-ClickButton.Text = "CLICK!"
-ClickButton.TextSize = 24
-ClickButton.Font = Enum.Font.SourceSansBold
-ClickButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-ClickButton.BackgroundColor3 = Color3.fromRGB(0, 120, 255)
-ClickButton.Parent = ScreenGui
-
-local ClickCounter = Instance.new("TextLabel")
-ClickCounter.Size = UDim2.new(1, 0, 0.05, 0)
-ClickCounter.Position = UDim2.new(0, 0, 0.78, 0)
-ClickCounter.BackgroundTransparency = 1
-ClickCounter.Text = "Points: 0"
-ClickCounter.TextColor3 = Color3.fromRGB(255, 255, 255)
-ClickCounter.Font = Enum.Font.GothamBold
-ClickCounter.TextSize = 22
-ClickCounter.Parent = ScreenGui
-
-ClickButton.MouseButton1Click:Connect(function()
-    ClickPoints = ClickPoints + 1
-    ClickCounter.Text = "Points: " .. ClickPoints
-end)
 
 -- Loading Progress (3.5 Minutes Timer)
 local totalLoadTime = 210
