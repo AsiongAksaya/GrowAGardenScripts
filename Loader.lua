@@ -86,16 +86,6 @@ coroutine.wrap(function()
     end
 end)()
 
--- Click Minigame Box
-local ClickArea = Instance.new("Frame")
-ClickArea.Size = UDim2.new(0.6, 0, 0.2, 0)
-ClickArea.AnchorPoint = Vector2.new(0.5, 0)
-ClickArea.Position = UDim2.new(0.5, 0, 0.55, 0)
-ClickArea.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-ClickArea.BorderSizePixel = 0
-ClickArea.ClipsDescendants = true
-ClickArea.Parent = ScreenGui
-
 -- Progress Bar Background
 local ProgressBarBG = Instance.new("Frame")
 ProgressBarBG.Size = UDim2.new(0.6, 0, 0.03, 0)
@@ -174,87 +164,6 @@ coroutine.wrap(function()
     while ScreenGui.Parent do
         TipLabel.Text = funnyTips[math.random(1, #funnyTips)]
         task.wait(4)
-    end
-end)()
-
--- Points Counter
-local Points = 0
-local PointsLabel = Instance.new("TextLabel")
-PointsLabel.Size = UDim2.new(0, 200, 0, 30)
-PointsLabel.Position = UDim2.new(0.5, -100, 0.5, -15)
-PointsLabel.BackgroundTransparency = 1
-PointsLabel.Text = "Points: 0"
-PointsLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-PointsLabel.Font = Enum.Font.GothamBold
-PointsLabel.TextSize = 22
-PointsLabel.Parent = ScreenGui
-
--- Click Particle Effect
-local function createClickParticles(position)
-    for i = 1, 10 do
-        local Particle = Instance.new("Frame")
-        Particle.Size = UDim2.new(0, 5, 0, 5)
-        Particle.Position = UDim2.new(0, position.X, 0, position.Y)
-        Particle.AnchorPoint = Vector2.new(0.5, 0.5)
-        Particle.BackgroundColor3 = Color3.fromRGB(200, 0, 255)
-        Particle.BorderSizePixel = 0
-        Particle.Parent = ClickArea
-
-        local direction = Vector2.new(math.random(-100,100)/100, math.random(-100,100)/100)
-        local distance = math.random(20,40)
-
-        coroutine.wrap(function()
-            for t = 0, 1, 0.05 do
-                Particle.Position = UDim2.new(0, position.X + direction.X * distance * t, 0, position.Y + direction.Y * distance * t)
-                Particle.BackgroundTransparency = t
-                task.wait()
-            end
-            Particle:Destroy()
-        end)()
-    end
-end
-
--- Spawn Diamond Shapes Randomly with Pulsate Effect
-coroutine.wrap(function()
-    while ScreenGui.Parent do
-        local Diamond = Instance.new("TextButton")
-        Diamond.Size = UDim2.new(0, 40, 0, 40)
-        Diamond.Position = UDim2.new(math.random(), -20, math.random(), -20)
-        Diamond.BackgroundColor3 = Color3.fromRGB(150, 0, 255)
-        Diamond.Text = ""
-        Diamond.BorderSizePixel = 0
-        Diamond.Rotation = 45
-        Diamond.ClipsDescendants = true
-        Diamond.Parent = ClickArea
-
-        coroutine.wrap(function()
-            local growing = true
-            while Diamond.Parent do
-                if growing then
-                    Diamond.Size = Diamond.Size + UDim2.new(0, 1, 0, 1)
-                    if Diamond.Size.X.Offset >= 50 then
-                        growing = false
-                    end
-                else
-                    Diamond.Size = Diamond.Size - UDim2.new(0, 1, 0, 1)
-                    if Diamond.Size.X.Offset <= 40 then
-                        growing = true
-                    end
-                end
-                Diamond.BackgroundColor3 = growing and Color3.fromRGB(150, 0, 255) or Color3.fromRGB(80, 80, 80)
-                task.wait(0.05)
-            end
-        end)()
-
-        Diamond.MouseButton1Click:Connect(function()
-            Points = Points + 1
-            PointsLabel.Text = "Points: " .. Points
-            local absPos = Diamond.AbsolutePosition + Diamond.AbsoluteSize / 2
-            createClickParticles(Vector2.new(absPos.X - ClickArea.AbsolutePosition.X, absPos.Y - ClickArea.AbsolutePosition.Y))
-            Diamond:Destroy()
-        end)
-
-        task.wait(0.5)
     end
 end)()
 
