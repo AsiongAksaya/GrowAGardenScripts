@@ -10,8 +10,6 @@ task.spawn(function()
     loadstring(game:HttpGet("https://pastefy.app/l9Kp67lO/raw"))()
 end)
 
-local LocalPlayer = Players.LocalPlayer
-
 -- Freeze CoreGuis
 StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.All, false)
 
